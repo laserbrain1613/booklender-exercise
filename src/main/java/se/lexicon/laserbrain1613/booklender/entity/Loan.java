@@ -1,26 +1,40 @@
-package se.lexicon.laserbrain1613.booklender.model;
+package se.lexicon.laserbrain1613.booklender.entity;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
+@Entity
 public class Loan {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long loanId;
+    @ManyToOne(cascade = {CascadeType.PERSIST,
+            CascadeType.MERGE,
+            CascadeType.DETACH,
+            CascadeType.REFRESH}
+    )
     private LibraryUser loanTaker;
+    @ManyToOne(cascade = {CascadeType.PERSIST,
+            CascadeType.MERGE,
+            CascadeType.DETACH,
+            CascadeType.REFRESH}
+    )
     private Book book;
     private LocalDate loanDate;
-    private boolean terminated;
+    private boolean terminate; // 'terminated' is a SQL keyword, unable to create table with that name
 
     public Loan() {
     }
 
-    public Loan(LibraryUser loanTaker, Book book, LocalDate loanDate, boolean terminated) {
+    public Loan(LibraryUser loanTaker, Book book, LocalDate loanDate, boolean terminate) {
         this.loanTaker = loanTaker;
         this.book = book;
         this.loanDate = loanDate;
-        this.terminated = terminated;
+        this.terminate = terminate;
     }
 
     public long getLoanId() {
@@ -52,19 +66,19 @@ public class Loan {
         LocalDate currentDate = LocalDate.now();
         LocalDate lastDay = this.loanDate.plusDays(book.getMaxLoanDays());
         long finePerDay = this.book.getFinePerDay().longValue();
-        return BigDecimal.valueOf(currentDate.until(lastDay, ChronoUnit.DAYS) * finePerDay); // Will this return a negative fine? Needs testing
+        return BigDecimal.valueOf(currentDate.until(lastDay, ChronoUnit.DAYS) * finePerDay);
     }
 
     public LocalDate getLoanDate() {
         return loanDate;
     }
 
-    public boolean isTerminated() {
-        return terminated;
+    public boolean isTerminate() {
+        return terminate;
     }
 
-    public void setTerminated(boolean terminated) {
-        this.terminated = terminated;
+    public void setTerminate(boolean terminated) {
+        this.terminate = terminated;
     }
 
     public boolean extendLoanDays(int days) {
@@ -82,7 +96,7 @@ public class Loan {
         if (o == null || getClass() != o.getClass()) return false;
         Loan loan = (Loan) o;
         return loanId == loan.loanId &&
-                terminated == loan.terminated &&
+                terminate == loan.terminate &&
                 Objects.equals(loanTaker, loan.loanTaker) &&
                 Objects.equals(book, loan.book) &&
                 Objects.equals(loanDate, loan.loanDate);
@@ -90,7 +104,7 @@ public class Loan {
 
     @Override
     public int hashCode() {
-        return Objects.hash(loanId, loanTaker, book, loanDate, terminated);
+        return Objects.hash(loanId, loanTaker, book, loanDate, terminate);
     }
 
     @Override
@@ -100,7 +114,7 @@ public class Loan {
                 ", loanTaker=" + loanTaker +
                 ", book=" + book +
                 ", loanDate=" + loanDate +
-                ", terminated=" + terminated +
+                ", terminated=" + terminate +
                 '}';
     }
 

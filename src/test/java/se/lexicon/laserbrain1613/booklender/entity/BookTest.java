@@ -1,4 +1,4 @@
-package se.lexicon.laserbrain1613.booklender.model;
+package se.lexicon.laserbrain1613.booklender.entity;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

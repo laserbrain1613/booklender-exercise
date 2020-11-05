@@ -1,4 +1,4 @@
-package se.lexicon.laserbrain1613.booklender.model;
+package se.lexicon.laserbrain1613.booklender.entity;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,7 +33,7 @@ class LoanTest {
         assertNull(testObject.getLoanTaker());
         assertNull(testObject.getBook());
         assertNull(testObject.getLoanDate());
-        assertFalse(testObject.isTerminated());
+        assertFalse(testObject.isTerminate());
     }
 
     @Test
@@ -42,7 +42,7 @@ class LoanTest {
         assertEquals(testUser, testObject.getLoanTaker());
         assertEquals(testBook, testObject.getBook());
         assertFalse(testObject.isOverdue());
-        assertFalse(testObject.isTerminated());
+        assertFalse(testObject.isTerminate());
         assertEquals(LocalDate.now(), testObject.getLoanDate());
     }
 
@@ -55,12 +55,12 @@ class LoanTest {
         //Act
         testObject.setBook(book);
         testObject.setLoanTaker(libraryUser);
-        testObject.setTerminated(true);
+        testObject.setTerminate(true);
 
         //Assert
         assertEquals(book, testObject.getBook());
         assertEquals(libraryUser, testObject.getLoanTaker());
-        assertTrue(testObject.isTerminated());
+        assertTrue(testObject.isTerminate());
     }
 
     @Test
