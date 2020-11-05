@@ -30,11 +30,7 @@ public class LibraryUserTest {
 
     @Test
     public void getters_test() {
-        //Act
-        int result = testObject.getUserId();
-
-        //Assert
-        assertEquals(result, testObject.getUserId());
+        assertEquals(0, testObject.getUserId());
         assertEquals(LocalDate.now(), testObject.getRegDate());
         assertEquals("test", testObject.getName());
         assertEquals("test@test.com", testObject.getEmail());
