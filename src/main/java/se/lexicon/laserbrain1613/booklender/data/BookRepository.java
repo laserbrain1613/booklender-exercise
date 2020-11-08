@@ -8,6 +8,8 @@ import java.util.List;
 public interface BookRepository extends CrudRepository<Book, Integer> {
 
     List<Book> findAllByReserved(boolean reserved);
+
     List<Book> findAllByAvailable(boolean available);
-    List<Book> findAllByTitleIgnoreCase(String title);
+
+    List<Book> findAllByTitleIgnoreCase(String title); // There is a slight chance two titles have the same name
 }
