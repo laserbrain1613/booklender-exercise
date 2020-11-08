@@ -53,12 +53,17 @@ public class LoanRepositoryTest {
         List<Loan> result3 = testObject.findAllByLoanTakerUserId(user3.getUserId()); // Borrowed book 3
 
         //Assert
+        assertTrue(result.contains(loan1));
+        assertTrue(result.contains(loan2));
+        assertFalse(result.contains(loan3));
+        assertFalse(result3.contains(loan1));
+        assertFalse(result3.contains(loan2));
+        assertTrue(result3.contains(loan3));
         assertEquals(2, result.size());
         assertEquals(0, result2.size());
-        assertTrue(result2.isEmpty());
         assertEquals(1, result3.size());
+        assertTrue(result2.isEmpty());
     }
-
 
     @Test
     public void findByBookBookId() {

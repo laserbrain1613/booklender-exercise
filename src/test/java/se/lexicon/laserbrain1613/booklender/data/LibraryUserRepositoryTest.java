@@ -17,10 +17,12 @@ class LibraryUserRepositoryTest {
     @Autowired
     LibraryUserRepository testObject;
 
+    LibraryUser user;
+
     @BeforeEach
     void setUp() {
         testObject.save(new LibraryUser(LocalDate.now(), "test name 1", "test1@test.com"));
-        testObject.save(new LibraryUser(LocalDate.now(), "test name 2", "test2@test.com"));
+        user = testObject.save(new LibraryUser(LocalDate.now(), "test name 2", "test2@test.com"));
         testObject.save(new LibraryUser(LocalDate.now(), "test name 3", "test3@test.com"));
     }
 
@@ -30,10 +32,7 @@ class LibraryUserRepositoryTest {
         LibraryUser result = testObject.findByEmailIgnoreCase("test2@test.com");
 
         //Assert
-        assertTrue(result.getUserId() > 0);
-        assertEquals(LocalDate.now(), result.getRegDate());
-        assertEquals("test name 2", result.getName());
-        assertEquals("test2@test.com", result.getEmail());
+        assertEquals(result, user);
     }
 
 }

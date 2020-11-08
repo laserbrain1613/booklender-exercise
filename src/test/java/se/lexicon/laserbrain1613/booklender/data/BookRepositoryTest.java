@@ -71,7 +71,7 @@ class BookRepositoryTest {
         //Arrange
         book1.setTitle("Life After Life");
         book2.setTitle("Life After Life");
-        book3.setTitle("Half-life 2 - the true story");
+        book3.setTitle("Half-Life 2 - The True Story");
 
         //Act
         List<Book> result = testObject.findAllByTitleIgnoreCase("Life After Life");
