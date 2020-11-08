@@ -12,7 +12,7 @@ public class LibraryUser {
     private int userId;
     private LocalDate regDate;
     private String name;
-    @Column(unique = true)
+    @Column(unique = true, nullable = true)
     private String email;
 
     public LibraryUser() {

@@ -25,7 +25,7 @@ public class Loan {
     )
     private Book book;
     private LocalDate loanDate;
-    private boolean terminate; // 'terminated' is a SQL keyword, unable to create table with that name
+    private boolean terminate; // 'terminated' is a reserved SQL word, unable to create table with that name
 
     public Loan() {
     }
@@ -58,15 +58,23 @@ public class Loan {
     }
 
     public boolean isOverdue() {
-        LocalDate lastDay = this.loanDate.plusDays(book.getMaxLoanDays());
-        return LocalDate.now().isAfter(lastDay);
+        if (isTerminate()) {
+            return false;
+        } else {
+            LocalDate lastDate = this.loanDate.plusDays(book.getMaxLoanDays());
+            return LocalDate.now().isAfter(lastDate);
+        }
     }
 
     public BigDecimal getFine() {
-        LocalDate currentDate = LocalDate.now();
-        LocalDate lastDay = this.loanDate.plusDays(book.getMaxLoanDays());
-        long finePerDay = this.book.getFinePerDay().longValue();
-        return BigDecimal.valueOf(currentDate.until(lastDay, ChronoUnit.DAYS) * finePerDay);
+        if (!isOverdue()) {
+            return BigDecimal.valueOf(0);
+        } else {
+            LocalDate lastDate = this.loanDate.plusDays(book.getMaxLoanDays());
+            return BigDecimal
+                    .valueOf(lastDate.until(LocalDate.now(), ChronoUnit.DAYS))
+                    .multiply(book.getFinePerDay());
+        }
     }
 
     public LocalDate getLoanDate() {

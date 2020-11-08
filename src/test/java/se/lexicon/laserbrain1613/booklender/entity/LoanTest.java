@@ -68,6 +68,7 @@ class LoanTest {
         //Arrange
         testObject = new Loan(testUser, testBook, LocalDate.now().minusDays(5), false);
 
+        //Assert
         assertTrue(testObject.isOverdue());
     }
 
@@ -92,8 +93,8 @@ class LoanTest {
     @Test
     public void getFine_test() {
         //Arrange
-        testBook = new Book("test", 10, TEN, "test description");
-        testObject = new Loan(testUser, testBook, LocalDate.now().minusDays(5), false);
+        testBook = new Book("test", 5, TEN, "test description");
+        testObject = new Loan(testUser, testBook, LocalDate.now().minusDays(10), false);
 
         //Act
         BigDecimal result = testObject.getFine();
@@ -111,7 +112,7 @@ class LoanTest {
         boolean result = testObject.extendLoanDays(5);
 
         //Assert
-        assertTrue(testBook.isReserved());
+        assertFalse(result);
     }
 
     @Test
@@ -123,7 +124,7 @@ class LoanTest {
         boolean result = testObject.extendLoanDays(5);
 
         //Assert
-        assertFalse(testBook.isReserved());
+        assertTrue(result);
     }
 
     @Test
