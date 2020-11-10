@@ -1,5 +1,8 @@
 package se.lexicon.laserbrain1613.booklender.dto;
 
+import se.lexicon.laserbrain1613.booklender.entity.Book;
+import se.lexicon.laserbrain1613.booklender.entity.LibraryUser;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
