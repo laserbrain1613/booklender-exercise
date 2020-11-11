@@ -1,5 +1,6 @@
 package se.lexicon.laserbrain1613.booklender.util;
 
+import org.springframework.stereotype.Service;
 import se.lexicon.laserbrain1613.booklender.dto.BookDto;
 import se.lexicon.laserbrain1613.booklender.dto.LibraryUserDto;
 import se.lexicon.laserbrain1613.booklender.dto.LoanDto;
@@ -7,6 +8,10 @@ import se.lexicon.laserbrain1613.booklender.entity.Book;
 import se.lexicon.laserbrain1613.booklender.entity.LibraryUser;
 import se.lexicon.laserbrain1613.booklender.entity.Loan;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
 public class DTOConverterImpl implements DTOConverter {
 
     @Override
@@ -18,6 +23,13 @@ public class DTOConverterImpl implements DTOConverter {
                 book.getFinePerDay(),
                 book.getDescription()
         );
+    }
+
+    @Override
+    public List<BookDto> bookToDto(List<Book> books) {
+        return books.stream()
+                .map(this::bookToDto)
+                .collect(Collectors.toList());
     }
 
     @Override

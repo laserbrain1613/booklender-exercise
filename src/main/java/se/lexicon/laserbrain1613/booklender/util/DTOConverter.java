@@ -7,9 +7,13 @@ import se.lexicon.laserbrain1613.booklender.entity.Book;
 import se.lexicon.laserbrain1613.booklender.entity.LibraryUser;
 import se.lexicon.laserbrain1613.booklender.entity.Loan;
 
+import java.util.List;
+
 public interface DTOConverter {
 
     BookDto bookToDto(Book book);
+
+    List<BookDto> bookToDto(List<Book> book);
 
     Book dtoToBook(BookDto dto);
 
