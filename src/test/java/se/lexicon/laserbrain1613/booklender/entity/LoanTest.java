@@ -171,6 +171,6 @@ class LoanTest {
         assertTrue(result.contains("terminated=true"));
         assertTrue(result.contains("5"));
         assertTrue(result.contains("10"));
-   }
+    }
 
 }

@@ -19,9 +19,13 @@ public interface DTOConverter {
 
     LibraryUserDto userToDto(LibraryUser user);
 
+    List<LibraryUserDto> userToDto(List<LibraryUser> libraryUsers);
+
     LibraryUser dtoToUser(LibraryUserDto dto);
 
     LoanDto loanToDto(Loan loan);
+
+    List<LoanDto> loanToDto(List<Loan> loans);
 
     Loan dtoToLoan(LoanDto dto);
 }

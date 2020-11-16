@@ -40,9 +40,12 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookDto findById(int bookId) { // Not quite working as intended?
-        Book result = bookRepository.findById(bookId).get();
-        return dtoConverter.bookToDto(result);
+    public BookDto findById(int bookId) {
+        if (!bookRepository.findById(bookId).isPresent()) {
+            throw new IllegalArgumentException("ERROR: Book ID not found.");
+        } else {
+            return dtoConverter.bookToDto(bookRepository.findById(bookId).get());
+        }
     }
 
     @Override
@@ -52,14 +55,20 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookDto create(BookDto bookDto) { // Needs exception handling
+    public BookDto create(BookDto bookDto) {
+        if (bookRepository.findById(bookDto.getBookId()).isPresent()) {
+            throw new IllegalArgumentException("ERROR: Book ID already exists. Can't create new book.");
+        }
         Book result = dtoConverter.dtoToBook(bookDto);
         result = bookRepository.save(result);
         return dtoConverter.bookToDto(result);
     }
 
     @Override
-    public BookDto update(BookDto bookDto) { // Needs exception handling
+    public BookDto update(BookDto bookDto) {
+        if (!bookRepository.findById(bookDto.getBookId()).isPresent()) {
+            throw new IllegalArgumentException("ERROR: Book ID does not exist. Unable to update book.");
+        }
         Book result = dtoConverter.dtoToBook(bookDto);
         result = bookRepository.save(result);
         return dtoConverter.bookToDto(result);
@@ -67,7 +76,12 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public boolean delete(int bookId) {
-        return false;
+        if (!bookRepository.findById(bookId).isPresent()) {
+            throw new IllegalArgumentException("ERROR: Book ID does not exist. Unable to delete book.");
+        } else {
+            bookRepository.delete(bookRepository.findById(bookId).get());
+            return true;
+        }
     }
 
 }

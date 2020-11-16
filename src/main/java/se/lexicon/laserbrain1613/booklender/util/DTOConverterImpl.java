@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class DTOConverterImpl implements DTOConverter {
 
     @Override
-    public BookDto bookToDto(Book book) {
+    public BookDto bookToDto(Book book) { // Single object
         return new BookDto(
                 book.getBookId(),
                 book.getTitle(),
@@ -26,14 +26,14 @@ public class DTOConverterImpl implements DTOConverter {
     }
 
     @Override
-    public List<BookDto> bookToDto(List<Book> books) {
+    public List<BookDto> bookToDto(List<Book> books) { // List of objects
         return books.stream()
                 .map(this::bookToDto)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Book dtoToBook(BookDto dto) {
+    public Book dtoToBook(BookDto dto) { // Single object
         return new Book(
                 dto.getTitle(),
                 dto.getMaxLoanDays(),
@@ -43,7 +43,7 @@ public class DTOConverterImpl implements DTOConverter {
     }
 
     @Override
-    public LibraryUserDto userToDto(LibraryUser user) {
+    public LibraryUserDto userToDto(LibraryUser user) { // Single object
         return new LibraryUserDto(
                 user.getUserId(),
                 user.getRegDate(),
@@ -53,7 +53,14 @@ public class DTOConverterImpl implements DTOConverter {
     }
 
     @Override
-    public LibraryUser dtoToUser(LibraryUserDto dto) {
+    public List<LibraryUserDto> userToDto(List<LibraryUser> libraryUsers) { // List of objects
+        return libraryUsers.stream()
+                .map(this::userToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public LibraryUser dtoToUser(LibraryUserDto dto) { // Single object
         return new LibraryUser(
                 dto.getRegDate(),
                 dto.getName(),
@@ -62,7 +69,7 @@ public class DTOConverterImpl implements DTOConverter {
     }
 
     @Override
-    public LoanDto loanToDto(Loan loan) {
+    public LoanDto loanToDto(Loan loan) { // Single object
         return new LoanDto(
                 loan.getLoanId(),
                 userToDto(loan.getLoanTaker()),
@@ -73,7 +80,14 @@ public class DTOConverterImpl implements DTOConverter {
     }
 
     @Override
-    public Loan dtoToLoan(LoanDto dto) {
+    public List<LoanDto> loanToDto(List<Loan> loans) { // List of objects
+        return loans.stream()
+                .map(this::loanToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Loan dtoToLoan(LoanDto dto) { // Single object
         return new Loan(
                 dtoToUser(dto.getLoanTaker()),
                 dtoToBook(dto.getBook()),

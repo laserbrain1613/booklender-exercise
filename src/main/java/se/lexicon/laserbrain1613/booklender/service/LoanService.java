@@ -20,5 +20,5 @@ public interface LoanService {
 
     LoanDto update(LoanDto loanDto);
 
-    boolean delete(int loanId);
+    boolean delete(long loanId);
 }

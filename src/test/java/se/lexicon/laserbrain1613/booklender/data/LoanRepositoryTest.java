@@ -32,7 +32,7 @@ public class LoanRepositoryTest {
     Loan loan3;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         book1 = new Book("Test 1", 10, BigDecimal.valueOf(100), "test1");
         book2 = new Book("Test 2", 20, BigDecimal.valueOf(200), "test2");
         book3 = new Book("Test 3", 30, BigDecimal.valueOf(300), "test3");
@@ -48,9 +48,9 @@ public class LoanRepositoryTest {
     @Test
     public void findByLoanTakerUserId() {
         //Act
-        List<Loan> result = testObject.findAllByLoanTakerUserId(user1.getUserId()); // Borrowed book 1 and 2
-        List<Loan> result2 = testObject.findAllByLoanTakerUserId(user2.getUserId()); // Did not borrow any books
-        List<Loan> result3 = testObject.findAllByLoanTakerUserId(user3.getUserId()); // Borrowed book 3
+        List<Loan> result = testObject.findAllByLoanTaker_UserId(user1.getUserId()); // Borrowed book 1 and 2
+        List<Loan> result2 = testObject.findAllByLoanTaker_UserId(user2.getUserId()); // Did not borrow any books
+        List<Loan> result3 = testObject.findAllByLoanTaker_UserId(user3.getUserId()); // Borrowed book 3
 
         //Assert
         assertTrue(result.contains(loan1));
@@ -68,16 +68,16 @@ public class LoanRepositoryTest {
     @Test
     public void findByBookBookId() {
         //Act
-        Loan result = testObject.findByBookBookId(book1.getBookId());
-        Loan result2 = testObject.findByBookBookId(book2.getBookId());
-        Loan result3 = testObject.findByBookBookId(book3.getBookId());
-        Loan result4 = testObject.findByBookBookId(book4.getBookId());
+        List<Loan> result = testObject.findAllByBook_BookId(book1.getBookId());
+        List<Loan> result2 = testObject.findAllByBook_BookId(book2.getBookId());
+        List<Loan> result3 = testObject.findAllByBook_BookId(book3.getBookId());
+        List<Loan> result4 = testObject.findAllByBook_BookId(book4.getBookId());
 
         //Assert
-        assertEquals(user1, result.getLoanTaker()); // user1 borrowed book1
-        assertEquals(user1, result2.getLoanTaker()); // user1 borrowed book2
-        assertEquals(user3, result3.getLoanTaker()); // user3 borrowed book3
-        assertNull(result4); // no one has borrowed book4
+        assertTrue(result.contains(loan1));
+        assertTrue(result2.contains(loan2));
+        assertTrue(result3.contains(loan3));
+        assertTrue(result4.isEmpty());
     }
 
     @Test

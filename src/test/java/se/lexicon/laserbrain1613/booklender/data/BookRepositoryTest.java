@@ -8,6 +8,7 @@ import se.lexicon.laserbrain1613.booklender.entity.Book;
 
 import java.math.BigDecimal;
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
